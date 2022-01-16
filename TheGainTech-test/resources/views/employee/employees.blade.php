@@ -278,6 +278,14 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
+            @if(Session::has('success_message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{Session::get('success_message')}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
@@ -334,7 +342,8 @@ $(document).ready(function(){
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			<form action="{{url('add-employee')}}" method="post">
+                @csrf
 				<div class="modal-header">						
 					<h4 class="modal-title">Add Employee</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -342,19 +351,19 @@ $(document).ready(function(){
 				<div class="modal-body">					
 					<div class="form-group">
 						<label>Name</label>
-						<input type="text" class="form-control" required>
+						<input type="text" name="name" id="name" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Email</label>
-						<input type="email" class="form-control" required>
+						<input type="email" name="email" id="email" class="form-control" required>
 					</div>
 					<div class="form-group">
 						<label>Address</label>
-						<textarea class="form-control" required></textarea>
+						<textarea class="form-control" name="address" id="address" required></textarea>
 					</div>
 					<div class="form-group">
 						<label>Phone</label>
-						<input type="text" class="form-control" required>
+						<input type="text" name="phone" id="phone" class="form-control" required>
 					</div>					
 				</div>
 				<div class="modal-footer">

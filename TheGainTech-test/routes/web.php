@@ -17,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [App\Http\Controllers\EmployeeController::class, 'employees']);
+Route::post('/add-employee', [App\Http\Controllers\EmployeeController::class, 'addEmployee']);
