@@ -56,5 +56,13 @@ class EmployeeController extends Controller
         Session::flash('success_message',$message);
         return redirect()->back();
     }
+    public function deleteMultipleRecoeds(Request $request){
+        $ids = $request->ids;
+        // echo "<pre>"; print_r($ids);die;
+        Employee::whereIn('id',explode(",",$ids))->delete();
+        $message ="Employee data deleted Successfully!";
+        Session::flash('success_message',$message);
+        return redirect()->back();
+    }
 
 }

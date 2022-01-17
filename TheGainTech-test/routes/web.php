@@ -21,3 +21,4 @@ Route::post('/add-employee', [App\Http\Controllers\EmployeeController::class, 'a
 Route::get('/edit-employee/{id}', [App\Http\Controllers\EmployeeController::class, 'Edit']);
 Route::put('/update-employee', [App\Http\Controllers\EmployeeController::class, 'update']);
 Route::delete('/delete-employee', [App\Http\Controllers\EmployeeController::class, 'destroy']);
+Route::delete('/delete-multiple-employee', [App\Http\Controllers\EmployeeController::class, 'deleteMultipleRecoeds']);

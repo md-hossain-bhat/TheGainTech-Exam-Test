@@ -106,7 +106,7 @@ table.table td button:hover {
 table.table td button.edit {
 	color: #FFC107;
 }
-table.table td a.delete {
+table.table td button.delete {
 	color: #F44336;
 }
 table.table td i {
@@ -296,7 +296,7 @@ table.table .avatar {
 						<td>
 							
                             <button type="button" class="edit editbtn" value="{{$employee->id}}"><i class="material-icons" title="Edit">&#xE254;</i></button>
-							<button type="button" class="edit deletebtn" value="{{$employee->id}}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>
+							<button type="button" class="delete deletebtn" value="{{$employee->id}}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></button>
 						</td>
 					</tr>
                     @endforeach
@@ -304,7 +304,7 @@ table.table .avatar {
 			</table>
 			<div class="clearfix">
 				
-				<div class="hint-text">Showing <b>4</b> out of 4<b></b></div>
+				<div class="hint-text">Showing <b>5</b> out of 25<b></b></div>
 			{{ $employees->links('vendor.pagination.custom') }}
 			</div>
 		</div>
@@ -461,5 +461,54 @@ table.table .avatar {
         });
     });
 </script>
+<script>
+$(document).ready(function(){
 
+	$('#check_all').on('click',function(){
+		// alert(1);
+		if($(this).is(":checked", true)){
+			$('.checkbox').prop('checked',true);
+		}else{
+			$('.checkbox').prop('checked',false);
+		}
+	});
+	$('.checkbox').on('click',function(){
+		if($('.checkbox:checked').length == $('.checkbox').length){
+			$('#check_all').prop('checked', true);
+		}else{
+			$('#check_all').prop('checked', false);
+		}
+	});
+
+	$('.delete_all').on('click',function(e){
+		var idsArr = [];
+		$('.checkbox:checked').each(function(){
+			idsArr.push($(this).attr('data-id'));
+		});
+
+		if(idsArr.length <= 0){
+			alert('please atlest one record delete')
+		}else{
+			var strId = idsArr.join(",");
+				// console.log(strId);
+				$('#deleteEmployeeModal').modal('show');
+				$('#delete_id').val(strId);
+				$.ajax({
+					url:"/delete-multiple-employee",
+					type: "DELETE",
+					headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+					data:'ids='+strId,
+					success:function(data){
+						if(data['status'==true]){
+							$('.checkbox:checked').each(function(){
+								$(this).parsents("tr").remove();
+							})
+						}
+					}
+				});
+		}
+	});
+
+});
+</script>
 </html>
