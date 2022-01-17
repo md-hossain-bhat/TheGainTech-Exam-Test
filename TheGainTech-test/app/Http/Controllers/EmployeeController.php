@@ -8,12 +8,14 @@ use Session;
 
 class EmployeeController extends Controller
 {
+    //employee list
     public function employees(){
         $employees = Employee::paginate(5);
         // echo "<pre>"; print_r($employees);die;
         return view('employee.employees')->with(compact('employees'));
     }
 
+    //add employee
     public function addEmployee(Request $request){
         $employee = new Employee;
             $employee->name = $request->input('name');
@@ -25,7 +27,7 @@ class EmployeeController extends Controller
             Session::flash('success_message',$message);
             return redirect()->back();
     }
-
+    //edit employee show
     public function Edit($id){
         $employee = Employee::find($id);
         // echo "<pre>"; print_r($employee);die;
@@ -34,7 +36,7 @@ class EmployeeController extends Controller
             'employee'=>$employee,
         ]);
     }
-
+//update employee
     public function update(Request $request){
         $employee_id = $request->input('employee_id');
         $employee = Employee::find($employee_id);
@@ -47,7 +49,7 @@ class EmployeeController extends Controller
         Session::flash('success_message',$message);
         return redirect()->back();
     }
-
+//destroy employee
     public function destroy(Request $request){
         $delete_id = $request->input('delete_id');
         $employee = Employee::find($delete_id);
@@ -56,6 +58,7 @@ class EmployeeController extends Controller
         Session::flash('success_message',$message);
         return redirect()->back();
     }
+    //multiple recoad delete 
     public function deleteMultipleRecoeds(Request $request){
         $ids = $request->ids;
         // echo "<pre>"; print_r($ids);die;
