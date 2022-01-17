@@ -26,16 +26,26 @@ class EmployeeController extends Controller
             return redirect()->back();
     }
 
-    //edit employee
-    public function EditEmployee($id){
-
+    public function Edit($id){
         $employee = Employee::find($id);
-        
-        return view('employee.employees')->with(compact('employee'));
+        // echo "<pre>"; print_r($employee);die;
+        return response()->json([
+            'status'=>2000,
+            'employee'=>$employee,
+        ]);
     }
 
-
-    public function deleteEmployee($id){
-        
+    public function update(Request $request){
+        $employee_id = $request->input('employee_id');
+        $employee = Employee::find($employee_id);
+        $employee->name = $request->input('name');
+        $employee->email = $request->input('email');
+        $employee->address = $request->input('address');
+        $employee->phone = $request->input('phone');
+        $employee->update();
+        $message ="Employee Update Successfully!";
+        Session::flash('success_message',$message);
+        return redirect()->back();
     }
+
 }
