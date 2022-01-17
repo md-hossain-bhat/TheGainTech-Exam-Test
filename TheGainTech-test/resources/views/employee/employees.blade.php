@@ -436,7 +436,12 @@ table.table .avatar {
 </body>
 <script>
     $(document).ready(function(){
-		
+		$(document).on('click','.deletebtn',function(){
+			var delete_id = $(this).val();
+			$('#deleteModal').modal('show');
+			$('#delete_id').val(delete_id);
+		});
+
         $(document).on('click','.editbtn',function(){
             var employee_id = $(this).val();
             // alert(employee_id);
@@ -456,4 +461,5 @@ table.table .avatar {
         });
     });
 </script>
+
 </html>

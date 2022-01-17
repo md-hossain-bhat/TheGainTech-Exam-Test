@@ -48,4 +48,13 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
+    public function destroy(Request $request){
+        $delete_id = $request->input('delete_id');
+        $employee = Employee::find($delete_id);
+        $employee->delete();
+        $message ="Employee deleted Successfully!";
+        Session::flash('success_message',$message);
+        return redirect()->back();
+    }
+
 }
